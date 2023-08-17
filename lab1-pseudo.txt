@@ -1,0 +1,28 @@
+input n
+array a with size n
+
+for i from 0 to n - 1:
+    input a[i]
+
+most <- 0
+lesser <- 0
+prev <- 0
+temp <- 0
+
+for i from 0 to n - 1:
+    if prev is not equal to a[i]:
+        if lesser > most:
+            most <- lesser
+            temp <- a[i - 1]
+        lesser <- 0
+
+    if i is equal to n - 1:
+        lesser <- lesser + 1
+        if lesser > most:
+            most <- lesser
+            temp <- a[i - 1]
+        exit loop
+    lesser <- lesser + 1
+    prev <- a[i]
+
+output temp
