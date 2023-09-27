@@ -21,9 +21,9 @@ int isDuplicate(int number, int array[], int size) {
 void Merge(int A[], int l, int m, int r) {
   int n1 = m - l + 1;
   int n2 = r - m;
-  int i = 0, j = 0, k = l;
+  int i = 0, j = 0, k = 0;
 
-  int sorted[n1+n2];
+  int *sorted = (int*)malloc(sizeof(int) *(n1+n2));
 
   while (i < n1 && j < n2) {
     if (A[l + i] < A[m + 1 + j]) {
@@ -38,25 +38,26 @@ void Merge(int A[], int l, int m, int r) {
 
   if (i == n1) {
     for (; j < n2; j++) {
-      sorted[k] = A[m + j + 1];
+      swap(&sorted[k], &A[m + j + 1]);
       k++;
     }
   } else {
     for (; i < n1; i++) {
-      sorted[k] = A[l + i];
+      swap(&sorted[k], &A[l + i]);
       k++;
     }
   }
 
   for (i = l; i <= r; i++) {
-    A[i] = sorted[i];
+    swap(&A[i], &sorted[i-l]);
   }
 
+  free(sorted);
 }
 
 void MergeSort(int A[], int l, int r) {
   if (l < r) {
-    int m = floor((l + r) / 2);
+    int m=l+((r-l)/2);
     MergeSort(A, l, m);
     MergeSort(A, m + 1, r);
     Merge(A, l, m, r);
